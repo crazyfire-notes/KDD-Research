@@ -37,36 +37,36 @@ This repo is for KDD Dataset Research and Any kinds of Related works.
       11. num_failed_logins: 連線中有多少次登入失敗，範圍為 0 ~ 5
       12. logged_in: 連線中是否有成功登入，有 `0` (沒有) 和 `1` (有)
       13. num_compromised: 連線中有多少次被入侵, 數值
-    1.  root_shell: 連線中有 root shell, 數值
-    2.  su_attempted: 連線中有多少次嘗試使用 su, 數值
-    3.  num_root: 連線中有多少次使用 root, 數值
-    4.  num_file_creations: 連線中有多少次建立檔案, 數值
-    5.  num_shells: 連線中有多少次使用 shell, 數值
-    6.  num_access_files: 連線中有多少次存取檔案, 數值
-    7.  num_outbound_cmds: 連線中有多少次傳送指令, 數值
-    8.  is_host_login: 連線中是否有 host 登入, 有 `0` (沒有) 和 `1` (有)
-    9.  is_guest_login: 連線中是否有 guest 登入, 有 `0` (沒有) 和 `1` (有)
-    10. count: 連線中有多少次封包, 數值
-    11. srv_count: 連線中有多少次 server 封包, 數值
-    12. serror_rate: 連線中有多少次封包有 error, 數值
-    13. srv_serror_rate: 連線中有多少次 server 封包有 error, 數值
-    14. rerror_rate: 連線中有多少次封包有 error, 數值
-    15. srv_rerror_rate: 連線中有多少次 server 封包有 error, 數值
-    16. same_srv_rate: 連線中有多少次封包是同一個 server, 數值
-    17. diff_srv_rate: 連線中有多少次封包是不同的 server, 數值
-    18. srv_diff_host_rate: 連線中有多少次 server 封包是不同的 host, 數值
-    19. dst_host_count: 連線中有多少次封包是目的端的 host, 數值
-    20. dst_host_srv_count: 連線中有多少次封包是目的端的 server, 數值
-    21. dst_host_same_srv_rate: 連線中有多少次封包是目的端的 server, 數值
-    22. dst_host_diff_srv_rate: 連線中有多少次封包是目的端的不同 server, 數值
-    23. dst_host_same_src_port_rate: 連線中有多少次封包是目的端的相同來源端 port, 數值
-    24. dst_host_srv_diff_host_rate: 連線中有多少次封包是目的端的不同 server 的 host, 數值
-    25. dst_host_serror_rate: 連線中有多少次封包是目的端的 error, 數值
-    26. dst_host_srv_serror_rate: 連線中有多少次封包是目的端的 server 的 error, 數值
-    27. dst_host_rerror_rate: 連線中有多少次封包是目的端的 error, 數值
-    28. dst_host_srv_rerror_rate: 連線中有多少次封包是目的端的 server 的 error, 數值
-    29. class: 連線的類別, 有 `normal` (正常) 和 `anomaly` (異常)
-    30. difficulty_level: 連線的難度, 數值，難度從 1~21，越高越難
+      14. root_shell: 連線中有 root shell (root 用戶權限的指令)，有 `0` (沒有) 和 `1` (有)
+      15. su_attempted: 連線中有多少次出現 `su` 在指令中，有 `0` (沒有) 和 `1` (有)
+      16. num_root: 連線中有關於 root 用戶的訪問次數，範圍為 0 ~ 7468
+      17. num_file_creations: 連線中有多少次建立檔案的指令，範圍為 0 ~ 100
+      18. num_shells: 連線中有多少次使用 shell 的指令的次數，範圍為 0 ~ 5
+      19. num_access_files: 連線中有多少次存取檔案, 數值
+    1.  num_outbound_cmds: 連線中有多少次傳送指令, 數值
+    2.  is_host_login: 連線中是否有 host 登入, 有 `0` (沒有) 和 `1` (有)
+    3.  is_guest_login: 連線中是否有 guest 登入, 有 `0` (沒有) 和 `1` (有)
+    4.  count: 連線中有多少次封包, 數值
+    5.  srv_count: 連線中有多少次 server 封包, 數值
+    6.  serror_rate: 連線中有多少次封包有 error, 數值
+    7.  srv_serror_rate: 連線中有多少次 server 封包有 error, 數值
+    8.  rerror_rate: 連線中有多少次封包有 error, 數值
+    9.  srv_rerror_rate: 連線中有多少次 server 封包有 error, 數值
+    10. same_srv_rate: 連線中有多少次封包是同一個 server, 數值
+    11. diff_srv_rate: 連線中有多少次封包是不同的 server, 數值
+    12. srv_diff_host_rate: 連線中有多少次 server 封包是不同的 host, 數值
+    13. dst_host_count: 連線中有多少次封包是目的端的 host, 數值
+    14. dst_host_srv_count: 連線中有多少次封包是目的端的 server, 數值
+    15. dst_host_same_srv_rate: 連線中有多少次封包是目的端的 server, 數值
+    16. dst_host_diff_srv_rate: 連線中有多少次封包是目的端的不同 server, 數值
+    17. dst_host_same_src_port_rate: 連線中有多少次封包是目的端的相同來源端 port, 數值
+    18. dst_host_srv_diff_host_rate: 連線中有多少次封包是目的端的不同 server 的 host, 數值
+    19. dst_host_serror_rate: 連線中有多少次封包是目的端的 error, 數值
+    20. dst_host_srv_serror_rate: 連線中有多少次封包是目的端的 server 的 error, 數值
+    21. dst_host_rerror_rate: 連線中有多少次封包是目的端的 error, 數值
+    22. dst_host_srv_rerror_rate: 連線中有多少次封包是目的端的 server 的 error, 數值
+    23. class: 連線的類別, 有 `normal` (正常) 和 `anomaly` (異常)
+    24. difficulty_level: 連線的難度, 數值，難度從 1~21，越高越難
 - NSL-KDD 為 KDD-99 的修訂版本，主要旨在解決 KDD-99 資料集中的一些問題，包含：
   - KDD-99 中有不必要冗余的資料，可以避免 Classifiers 不會因為冗余的資料而有偏向性。 (這部分可以再做討論，究竟冗余資料是哪一種，而且會怎麼影響 Classifiers)
   - Testing set 中沒有重複的紀錄，因此 learning 的表現不會因為受到頻繁紀錄檢測率更高的方法而有所影響
@@ -85,6 +85,10 @@ This repo is for KDD Dataset Research and Any kinds of Related works.
 ## References / 參考資料
 
 - [A Detailed Analysis of the KDD CUP 99 Data Set](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5356528)
+- [A Deeper Dive into the NSL-KDD Data Set](https://towardsdatascience.com/a-deeper-dive-into-the-nsl-kdd-data-set-15c753364657)
+- [kdd99_feature_extractor](https://github.com/AI-IDS/kdd99_feature_extractor/)
+- [How to make dataset such as kddcup99 via wireshark](https://osqa-ask.wireshark.org/questions/14655/how-to-make-dataset-such-as-kddcup99-via-wireshark/)
+- 
 - [入侵檢測數據集](https://blog.csdn.net/HuTingyu/article/details/106479473)
 - [快速了解 NSL-KDD 数据集](https://blog.csdn.net/airenKKK/article/details/124619217)
 - [針對未知攻擊辨識之混合式入侵檢測系統](https://ir.nctu.edu.tw/bitstream/11536/76169/1/608301.pdf)
