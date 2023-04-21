@@ -84,7 +84,7 @@
 - [A Deeper Dive into the NSL-KDD Data Set](https://towardsdatascience.com/a-deeper-dive-into-the-nsl-kdd-data-set-15c753364657)
 - [kdd99_feature_extractor](https://github.com/AI-IDS/kdd99_feature_extractor/)
 - [How to make dataset such as kddcup99 via wireshark](https://osqa-ask.wireshark.org/questions/14655/how-to-make-dataset-such-as-kddcup99-via-wireshark/)
-- 
+- [NSL-KDD Features](https://docs.google.com/spreadsheets/d/1oAx320Vo9Z6HrBrL6BcfLH6sh2zIk9EKCv2OlaMGmwY/edit#gid=0)
 - [入侵檢測數據集](https://blog.csdn.net/HuTingyu/article/details/106479473)
 - [快速了解 NSL-KDD 数据集](https://blog.csdn.net/airenKKK/article/details/124619217)
 - [針對未知攻擊辨識之混合式入侵檢測系統](https://ir.nctu.edu.tw/bitstream/11536/76169/1/608301.pdf)
