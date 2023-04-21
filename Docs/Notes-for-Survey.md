@@ -81,6 +81,7 @@
 ## References / 參考資料
 
 - [A Detailed Analysis of the KDD CUP 99 Data Set](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5356528)
+- [KDD Cup 1999: Computer network intrusion detection](https://kdd.org/kdd-cup/view/kdd-cup-1999/Tasks)
 - [A Deeper Dive into the NSL-KDD Data Set](https://towardsdatascience.com/a-deeper-dive-into-the-nsl-kdd-data-set-15c753364657)
 - [kdd99_feature_extractor](https://github.com/AI-IDS/kdd99_feature_extractor/)
 - [How to make dataset such as kddcup99 via wireshark](https://osqa-ask.wireshark.org/questions/14655/how-to-make-dataset-such-as-kddcup99-via-wireshark/)
@@ -88,3 +89,5 @@
 - [入侵檢測數據集](https://blog.csdn.net/HuTingyu/article/details/106479473)
 - [快速了解 NSL-KDD 数据集](https://blog.csdn.net/airenKKK/article/details/124619217)
 - [針對未知攻擊辨識之混合式入侵檢測系統](https://ir.nctu.edu.tw/bitstream/11536/76169/1/608301.pdf)
+- [KDD CUP 99数据集简介](https://onestraw.github.io/cybersecurity/introduction-of-kdd-cup-99-dataset/)
+- [KDD CUP 99數據集分析](https://www.twblogs.net/a/5c9e8158bd9eee7523887b96)
