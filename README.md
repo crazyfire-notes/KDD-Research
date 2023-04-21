@@ -2,93 +2,84 @@
 
 This repo is for KDD Dataset Research and Any kinds of Related works.
 
-## About KDD Dataset / 關於 KDD 資料集
+## What is NSL-KDD Dataset? / 什麼是 NSL-KDD Dataset?
 
-- KDD 資料集是一個著名的網路流量數據資料集，其中最有名的資料及有兩個，一、KDD-99 資料集，二、NSL-KDD 資料集。本記錄會以 NSL-KDD 為主作紀錄。
-- 關於 KDD 資料集中，General 的資訊如下，
-  - 資料集中有四種不同的攻擊，分別是 DoS (服務阻斷), Probe (探測), R2L (遠端操作), U2R (使用者權限提升)。
-    - 其中四種類別還分別有以下子類別：
-      | Classes | DoS | Probe | R2L | U2R |
-      | --- | --- | --- | --- | --- |
-      | Subclasses | apache2, back, land, neptune, mailbomb, pod, processtable, smurf, teardrop, udpstorm, worm | ipsweep, mscan, nmap, portsweep, saint, satan | ftp_write, guess_passwd, httptunnel, imap, multihop, named, phf, sendmail, snmpgetattack, spy, snmpguess, warezclient, warezmaster, xlock, xsnoop | buffer_overflow, loadmodule, perl, ps, rootkit, sqlattack, xterm |
-      | Total | 11 | 6 | 15 | 7 |
-  - 而其中每一條流量數據都有包含 43 個特徵，包含 41 個數據原始特徵，和一個標籤 (正常 / 攻擊)，和一個分數 (流量嚴重性)，各欄位分別是
-    - TCP 基礎連線特徵
-      1. duration: 連線持續時間，以秒為單位，範圍為 0 ~ 58329。
-        > 其定義方式:
-        >
-        > - TCP: TCP 的第一次握手 (SYN) 到第三次握手 (FIN/ACK) 或者失敗握手 (RST) 的時間。
-        > - UDP: UDP 則是每一個 UDP 當作一個連線，所以時間就是每一個 UDP 的時間。
-        >   > - duration = 0 在 dataset 中大量出現的原因是因為這個連接持續時間不到 1 sec。
-      1. protocol_type: 連線協定，有三種，`tcp`, `udp`, `icmp`
-      2. service: 目標主機的服務類型 (所連線的服務)，共 70 種，`aol`, `auth`, `bgp`, `courier`, `csnet_ns`, `ctf`, `daytime`, `discard`, `domain`, `domain_u`, `echo`, `eco_i`, `ecr_i`, `efs`, `exec`, `finger`, `ftp`, `ftp_data`, `gopher`, `harvest`, `hostnames`, `http`, `http_2784`, `http_443`, `http_8001`, `imap4`, `IRC`, `iso_tsap`, `klogin`, `kshell`, `ldap`, `link`, `login`, `mtp`, `name`, `netbios_dgm`, `netbios_ns`, `netbios_ssn`, `netstat`, `nnsp`, `nntp`, `ntp_u`, `other`, `pm_dump`, `pop_2`, `pop_3`, `printer`, `private`, `red_i`, `remote_job`, `rje`, `shell`, `smtp`, `sql_net`, `ssh`, `sunrpc`, `supdup`, `systat`, `telnet`, `tftp_u`, `tim_i`, `time`, `urh_i`, `urp_i`, `uucp`, `uucp_path`, `vmnet`, `whois`, `X11`, `Z39_50`
-      3. flag: 連線是否正常或錯誤 (連線狀態)，共有 11 種，`OTH`, `REJ`, `RSTO`, `RSTOS0`, `RSTR`, `S0`, `S1`, `S2`, `S3`, `SF`, `SH`
-        > 其表示了連線是否有依照協定要求開始或者完成。
-        >
-        > - `SF`: 表示連線正常建立且正常終止
-        > - `S0`: 表示只接收到 SYN 封包，但是沒有回應 SYN/ACK 封包
-      4. src_bytes: 來源端傳送到目的端的 bytes 數量，以 bytes 為單位，範圍為 0 ~ 1,379,963,888
-      5. dst_bytes: 目的端傳送到來源端的 bytes 數量，以 bytes 為單位，範圍為 0 ~ 1,309,937,401
-      6. land: 來源端和目的端是否為同一個 IP, 有 `0` (不是) 和 `1` (是)
-      7. wrong_fragment: 連線中有多少錯誤的封包，範圍為 0 ~ 3
-      8. urgent: 連線中有多少 urgent 的封包，範圍為 0 ~ 14
-    - TCP 連線內容特徵
-      10. hot: 連線中訪問系統敏感資源的次數，範圍為 0 ~ 101
-      11. num_failed_logins: 連線中有多少次登入失敗，範圍為 0 ~ 5
-      12. logged_in: 連線中是否有成功登入，有 `0` (沒有) 和 `1` (有)
-      13. num_compromised: 連線中有多少次被入侵, 數值
-      14. root_shell: 連線中有 root shell (root 用戶權限的指令)，有 `0` (沒有) 和 `1` (有)
-      15. su_attempted: 連線中有多少次出現 `su` 在指令中，有 `0` (沒有) 和 `1` (有)
-      16. num_root: 連線中有關於 root 用戶的訪問次數，範圍為 0 ~ 7468
-      17. num_file_creations: 連線中有多少次建立檔案的指令，範圍為 0 ~ 100
-      18. num_shells: 連線中有多少次使用 shell 的指令的次數，範圍為 0 ~ 5
-      19. num_access_files: 連線中有多少次存取檔案, 數值
-    1.  num_outbound_cmds: 連線中有多少次傳送指令, 數值
-    2.  is_host_login: 連線中是否有 host 登入, 有 `0` (沒有) 和 `1` (有)
-    3.  is_guest_login: 連線中是否有 guest 登入, 有 `0` (沒有) 和 `1` (有)
-    4.  count: 連線中有多少次封包, 數值
-    5.  srv_count: 連線中有多少次 server 封包, 數值
-    6.  serror_rate: 連線中有多少次封包有 error, 數值
-    7.  srv_serror_rate: 連線中有多少次 server 封包有 error, 數值
-    8.  rerror_rate: 連線中有多少次封包有 error, 數值
-    9.  srv_rerror_rate: 連線中有多少次 server 封包有 error, 數值
-    10. same_srv_rate: 連線中有多少次封包是同一個 server, 數值
-    11. diff_srv_rate: 連線中有多少次封包是不同的 server, 數值
-    12. srv_diff_host_rate: 連線中有多少次 server 封包是不同的 host, 數值
-    13. dst_host_count: 連線中有多少次封包是目的端的 host, 數值
-    14. dst_host_srv_count: 連線中有多少次封包是目的端的 server, 數值
-    15. dst_host_same_srv_rate: 連線中有多少次封包是目的端的 server, 數值
-    16. dst_host_diff_srv_rate: 連線中有多少次封包是目的端的不同 server, 數值
-    17. dst_host_same_src_port_rate: 連線中有多少次封包是目的端的相同來源端 port, 數值
-    18. dst_host_srv_diff_host_rate: 連線中有多少次封包是目的端的不同 server 的 host, 數值
-    19. dst_host_serror_rate: 連線中有多少次封包是目的端的 error, 數值
-    20. dst_host_srv_serror_rate: 連線中有多少次封包是目的端的 server 的 error, 數值
-    21. dst_host_rerror_rate: 連線中有多少次封包是目的端的 error, 數值
-    22. dst_host_srv_rerror_rate: 連線中有多少次封包是目的端的 server 的 error, 數值
-    23. class: 連線的類別, 有 `normal` (正常) 和 `anomaly` (異常)
-    24. difficulty_level: 連線的難度, 數值，難度從 1~21，越高越難
-- NSL-KDD 為 KDD-99 的修訂版本，主要旨在解決 KDD-99 資料集中的一些問題，包含：
-  - KDD-99 中有不必要冗余的資料，可以避免 Classifiers 不會因為冗余的資料而有偏向性。 (這部分可以再做討論，究竟冗余資料是哪一種，而且會怎麼影響 Classifiers)
-  - Testing set 中沒有重複的紀錄，因此 learning 的表現不會因為受到頻繁紀錄檢測率更高的方法而有所影響
-  - 對於不同難度資料的分類，KDD-99 中的攻擊類別是不平衡的，而 NSL-KDD 中的攻擊類別是平衡的
-  - 訓練集和測試集中的數量紀錄是合理的，因此使用整個資料集做訓練是可行且合理的，無需再做切割，所有的實驗都將可以有一致性和完整性。
+- NSL-KDD Dataset 是 KDD'99 Dataset 的修訂版本，並解決了
+  - KDD'99 Dataset 中有冗余資料的問題。
+  - KDD'99 Dataset 中的測試集有來自訓練集的資料副本的問題。
+  -
 
-## Keywords Explanation / 關鍵字解釋
+## The History of NSL-KDD Dataset / NSL-KDD Dataset 的歷史
 
-- **Attack Type** / 攻擊類型
-  - DoS (Denial of Service) / 服務阻斷
-  - Probe (Network probing) / 探測
-  - R2L (Remote to Local) / 遠端操作
-  - U2R (User to Root) / 使用者權限提升
-- Intrusion Detection System (IDS) / 入侵偵測系統
+- NSL-KDD Dataset 是在 2009 年由 UNB (University of New Brunswick) 所整理開發的，旨在解決於 1999 年 KDD Cup 中所使用的 KDD'99 Dataset 中的問題。
+- KDD'99 Dataset 則是在 1999 使用在 KDD Cup 1999 年的 計算機網路入侵偵測競賽 中的資料集，由 Stolfo 等人所整理，其數據源自於 1998 年 DARPA (Defense Advanced Research Projects Agency) 所紀錄的 9 週的網路流量，並依照前七週的數據作為訓練集，後兩週的數據作為測試集。
+- 而 DARPA 98 則是由 MIT Lincoln Lab 所提供的，其創建目的為調查和評估入侵檢測研究。此環境模擬了典型美國空軍 LAN 的九週原始 TCP 轉存數據，在將此 LAN 視為真正的空軍環境做操作的過程中，也同時對其進行攻擊。
+  - 此還環境所遭受的攻擊主要分成四大類：
+    - DoS (Denial of Service)：拒絕服務攻擊，主要是透過洪水攻擊 (Flood Attack) 來使目標主機或網路資源無法提供正常的服務。
+    - Probe：探查攻擊，主要是透過探查來找出目標主機或網路資源的弱點。
+    - R2L (Remote to Local)：遠端到本地攻擊，主要是透過遠端的方式來攻擊本地主機或網路資源。
+    - U2R (User to Root)：使用者到高權限使用者攻擊，主要是透過嘗試提升使用者權限來攻擊本地主機或網路資源。
+  - 更重要的事情是測試資料中跟訓練資料是有所落差的，在測試資料中有完全不包含在訓練資料中的特定攻擊類型，而且在測試資料中的攻擊類型的比例也與訓練資料中的攻擊類型的比例不同。
+    > 此部分讓很多專家認為更貼近真實環境，因為在真實環境中，攻擊者會不斷地創造新的攻擊方式，而且攻擊的比例也會隨著時間的推移而改變。
+- 總結：
+  - KDD'99 由於是 DARPA 98 的整理版本，因此在攻擊類型上當然是看齊 DARPA 98 的攻擊類型，也分成了四大類。NSL-KDD 又是 KDD'99 的修訂版本，因此也是此四大類攻擊特徵。
 
-## References / 參考資料
+## The difference of KDD Data set / KDD Data set 的差異
 
-- [A Detailed Analysis of the KDD CUP 99 Data Set](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=5356528)
-- [A Deeper Dive into the NSL-KDD Data Set](https://towardsdatascience.com/a-deeper-dive-into-the-nsl-kdd-data-set-15c753364657)
-- [kdd99_feature_extractor](https://github.com/AI-IDS/kdd99_feature_extractor/)
-- [How to make dataset such as kddcup99 via wireshark](https://osqa-ask.wireshark.org/questions/14655/how-to-make-dataset-such-as-kddcup99-via-wireshark/)
-- 
-- [入侵檢測數據集](https://blog.csdn.net/HuTingyu/article/details/106479473)
-- [快速了解 NSL-KDD 数据集](https://blog.csdn.net/airenKKK/article/details/124619217)
-- [針對未知攻擊辨識之混合式入侵檢測系統](https://ir.nctu.edu.tw/bitstream/11536/76169/1/608301.pdf)
+- KDD 相比一般對於網路流量的收集，提供了共 43 種數據特徵，包含 41 個原始數據特徵，跟一個攻擊類型標籤，以及一個攻擊嚴重性標籤。
+- 在 41 種特徵中，又可以分成三大類型，分別是
+
+  - 基礎連線特徵，也就是我們常見關於流量的資訊內容，包含
+    1. duration: 連線持續時間
+    2. protocol_type: 連線協定
+    3. service: 目標主機的服務類型 (所連線的服務)
+    4. flag: 連線是否正常或錯誤 (連線狀態)
+    5. src_bytes: 來源端傳送到目的端的 bytes 數量
+    6. dst_bytes: 目的端傳送到來源端的 bytes 數量
+    7. land: 來源端跟目的端是否為同一個 IP 跟 Port
+    8. wrong_fragment: 連線中的錯誤片段數量
+    9. urgent: 連線中的 urgent 封包數量 (也就是在 packet 中有 urgent bit 的 packet 數量)
+  - 連線內容特徵，也就是對於服務的操作互動上的特徵，包含
+    1. hot: 連線中的訪問敏感服務/資源的次數
+    2. num_failed_logins: 連線中的登入失敗次數
+    3. logged_in: 連線中是否有登入成功
+    4. num_compromised: 連線中的有多少"被入侵的目標" (compromise indicator) Number of "compromised" conditions
+       > 不確定該如何翻譯跟理解
+    5. root_shell: 連線中是否有 root shell (root 用戶權限的指令)
+    6. su_attempted: 連線中是否有 `su` 指令的使用
+    7. num_root (number of "root" accesses): 連線中有多少次 root 權限的操作
+    8. num_file_creations (number of file creation operations): 連線中有多少次建立檔案的操作
+    9. num_shells (number of shells): Shell 被開啟的次數
+    10. num_access_files (number of operations on access control files): 連線中有多少次對 access control files 的操作
+    11. num_outbound_cmds (number of outbound commands in an ftp session): 連線中有多少次對 ftp session 的 outbound 指令
+    12. is_host_login (is this login a host (not a user) login): 連線中是否有 host login
+    13. is_guest_login (is this login a "guest" login): 連線中是否有 guest login
+  - 基於時間的特徵，也就是對於連線的時間上的特徵，包含
+    1. count: 連線的次數
+    2. srv_count: 連線的次數 (server)
+    3. serror_rate: 連線中的錯誤封包數量 / 連線中的封包數量
+    4. srv_serror_rate: 連線中的錯誤封包數量 / 連線中的封包數量 (server)
+    5. rerror_rate: 連線中的錯誤回應數量 / 連線中的回應數量
+    6. srv_rerror_rate: 連線中的錯誤回應數量 / 連線中的回應數量 (server)
+    7. same_srv_rate: 連線中的相同服務的封包數量 / 連線中的封包數量
+    8. diff_srv_rate: 連線中的不同服務的封包數量 / 連線中的封包數量
+    9. srv_diff_host_rate: 連線中的不同主機的封包數量 / 連線中的封包數量 (server)
+  - 基於主機的特徵，也就是對於連線的主機上的特徵，包含
+    1.  dst_host_count: 連線中的目的主機數量
+    2.  dst_host_srv_count: 連線中的目的主機數量 (server)
+    3.  dst_host_same_srv_rate: 連線中的相同服務的封包數量 / 連線中的封包數量 (目的主機)
+    4.  dst_host_diff_srv_rate: 連線中的不同服務的封包數量 / 連線
+    5.  dst_host_same_src_port_rate: 連線中的相同來源端口的封包數量 / 連線中的封包數量 (目的主機)
+    6.  dst_host_srv_diff_host_rate: 連線中的不同主機的封包數量 / 連線中的封包數量 (目的主機)
+    7.  dst_host_serror_rate: 連線中的錯誤封包數量 / 連線中的封包數量 (目的主機)
+    8.  dst_host_srv_serror_rate: 連線中的錯誤封包數量 / 連線中的封包數量 (目的主機 server)
+    9.  dst_host_rerror_rate: 連線中的錯誤回應數量 / 連線中的回應數量 (目的主機)
+    10. dst_host_srv_rerror_rate: 連線中的錯誤回應數量 / 連線中的回應數量 (目的主機 server)
+  - 最後則是標籤跟等級，包含
+    1.  class: 連線的類別，是 `normal` (正常) 還是 `anomaly` (異常)
+    2.  difficulty_level: 連線的難度等級
+
+- 依照這樣去對資料做細分是有意義的，
+  - 首先是 "封包基本連線特徵"，這很好理解，本來 Traffic 中就會有這些資訊，而且理論上互動上來說怎樣才算是 "符合預期" 在這個領域上是有一定的共識的，所以這部分的特徵是比較好理解的
+  - 其次是 "封包內容特徵"，這部分可以算是對於 R2L 跟 U2R 這兩種攻擊型態所專屬的特徵狀況，由於相較於其他兩種攻擊型態，往往會由大量且多個 packets 所組成，R2L 跟 U2R 往往只有一個 packet 所攜帶的 payload 就屬於一個操作了，所以歸納了這類型的特徵。
+  - 再來是對於連續封包的特徵，分別有 "基於時間" 跟 "基於同服務" 
