@@ -132,3 +132,12 @@ This repo is for KDD Dataset Research and Any kinds of Related works.
 - 所以會不會其實 NSL-KDD 數據集仍然存在很許多 DARPA Dataset 遺留下來的問題，也仍然有很多本身所創造出來的問題，但這不影響 NSL-KDD 仍然是目前非常重要的網路流量公開訓練資料集。
 
 ## What I'm trying to use about NSL-KDD Dataset / 我想要用 NSL-KDD Dataset 做什麼
+
+- 上面有提到關於 KDD Dataset 使用上會遇到的問題，先撇除 Dataset 本身在收集上的那些問題 (這個部分我們也愛莫能助)，這個 Dataset 帶給了我們什麼，其實就是 Format。
+- 對於 Traffic 相關的 Machine Learning 或者是 Deep Learning 的研究，我們都會遇到一個問題，就是如何將 Time-series 的資料轉換成可以被 Machine Learning Model 所使用的資料，因為封包往往其實不是單一一個封包就可以做辨識判斷的，會需要一些前後的封包資訊，因此也回頭思考，假如我今天要設計一個 IDS 系統，或者異常檢測警示系統，可以怎麼做到？
+- 由於面對 Time-Series 的問題，往往會需要用到 RNN, LSTM 等 Regression Model 才能操作，使用上也會有些偏向預測未來狀況來做實際數據的比對，環境合理與否，可以做到實時的預測，但準確率跟誤判率可能會需要特別注意。
+- 那假如我們可以接受稍微 Delay 一下來檢查，或者是不需要實時的檢查，而是可以先將數據收集起來，再進行分析，那我們可以怎麼做呢？
+  - KDD Format 完美的解決了這個問題，他將連續的 Traffic Packets 整合起來，進行特徵預處理，那我們其實就可以使用效果很不錯的 Classification Model 做使用了，而如果要做到沒看過的攻擊檢測的部分，也可以嘗試搭配 Clustering Model Solution 或者直接比對 Classification Model 的 Threadhold 來做使用。
+- 因此如何 transfer packets to kdd format 呢？
+  > 此部分今日進度尚未完成 [2023.04.21]
+
